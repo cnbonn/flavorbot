@@ -7,6 +7,8 @@ from discord.ext.commands import has_permissions, MissingPermissions
 import sqlite3
 from sqlite3 import Error
 
+
+
 #read config file
 config_object = ConfigParser()
 config_object.read("config.ini")
@@ -235,5 +237,5 @@ async def summon(ctx, *, gamename):
 
 #run bot
 #client.run(serverinfo['clientid'])
-client.run(ENV['BOT_TOKEN'])
+client.run(environ.get('BOT_TOKEN'))
 
