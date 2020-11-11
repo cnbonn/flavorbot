@@ -237,5 +237,5 @@ async def summon(ctx, *, gamename):
 
 #run bot
 #client.run(serverinfo['clientid'])
-client.run(environ.get('BOT_TOKEN'))
+client.run(env('BOT_TOKEN'))
 
