@@ -6,7 +6,7 @@ from discord.ext.commands import has_permissions, MissingPermissions
 
 import sqlite3
 from sqlite3 import Error
-
+from os import environ
 
 
 #read config file
