@@ -37,7 +37,11 @@ c.execute("""CREATE TABLE usergame (
 
 c.execute("""CREATE TABLE games (
     id INTEGER PRIMARY KEY,
-    name blob unique
+    name blob unique,
+    minplayer int,
+    maxplayer int,
+    client blob,
+    ranked bool
     )
     """)
 

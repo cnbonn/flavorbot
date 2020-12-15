@@ -41,12 +41,14 @@ async def on_member_join(member):
     None
 
 @has_permissions(manage_roles=True, manage_channels=True)
-@client.command(name='game', help='game add|remove <game>')
+@client.command(name='game', help='game add|delete <game>')
 async def game(ctx, choice, *, gamename):
+
+    gamename = gamename.lower()
+
     if choice == 'add':
         conn = create_connection()
         c = conn.cursor()
-        
         print("gamename: {}".format(gamename))
         try:
             c.execute("INSERT INTO games Values (?,?)", (None, gamename, ))
@@ -76,8 +78,9 @@ async def game(ctx, choice, *, gamename):
         await ctx.send('invalid response')
 
 @client.command(name='list', help='list games|users <game>')
-async def list(ctx, choice, gamename = 'none'):
+async def list(ctx, choice, *, gamename = 'none'):
     #print list of games
+    gamename = gamename.lower()
 
     if choice == 'games':
         await ctx.send('---GAME LIST---')
@@ -157,12 +160,16 @@ async def join(ctx, *, gamename):
     conn = create_connection()
     c = conn.cursor()
     userid = ctx.author
+
+    gamename = gamename.lower()
+
     try:
         c.execute("select * from users where name = ?", (str(userid), ))
         user = c.fetchone()
     except Error as e:
         print(e)
         await ctx.send("user is not registered")
+        conn.close()
         return 
 
     try:
@@ -186,6 +193,7 @@ async def leave(ctx, *, gamename):
     conn = create_connection()
     c = conn.cursor()
     userid = ctx.author
+    gamename = gamename.lower()
     try:
         c.execute("select * from users where name = ?", (str(userid), ))
         user = c.fetchone()
@@ -214,6 +222,9 @@ async def leave(ctx, *, gamename):
 async def summon(ctx, *, gamename):
     conn = create_connection()
     c = conn.cursor()
+
+    gamename = gamename.lower()
+
     try:
         c.execute("""
         SELECT u.*
